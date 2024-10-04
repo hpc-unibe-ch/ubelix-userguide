@@ -1,22 +1,19 @@
 # Logging in (with web interface)
 
-!!! info
-	The web interface is still under development, so expect additional features and further polishing.
-	Read more about the possibilities with the web interface in the [web interface](../runjobs/webui/index.md) section.
+!!! warning
+	The UBELIX OnDemand portal is still under development. There will be bugs. 
+    Please report them at [https://serviceportal.unibe.ch/hpc](https://serviceportal.unibe.ch/hpc).
 
+We provide interactive HPC access including various interactive apps through the browser-based UBELIX OnDemand service available at [https://ondemand.hpc.unibe.ch](https://ondemand.hpc.unibe.ch).
 
-Using a web browser, navigate to [www.lumi.csc.fi](https://www.lumi.csc.fi). 
+!!! tip
+    UBELIX OnDemand requires an active UBELIX HPC account. Please request an account following the [instructions in the documentation](https://hpc-unibe-ch.github.io/getting-Started/account.html) **before** you try to use the OnDemand portal!
 
-![Image of welcome page for the LUMI web interface](../assets/images/wwwLumiWelcome.png)
+1. Visit [https://ondemand.hpc.unibe.ch](https://ondemand.hpc.unibe.ch) in your
+   web browser.
+2. You will be greeted by the Unibe Microsoft login screen. Use your **@unibe.ch** or **@students.unibe.ch** email address and the
+   correspoding password to log in.
+   ![Screenshot](../assets/images/ood-microsoft.png)
+3. Once the login is complete you will see the UBELIX OnDemand dashboard:
+   ![Dashboard](../assets/images/ood-dashboard.png)
 
-Click the _Go to login_ button to proceed.
-
-![Image of authentication page for the LUMI web interface](../assets/images/wwwLumiAuth.png)
-
-Choose the correct authentication provider which for most LUMI users is _MyAccessID_ (users with a Finnish allocation can also use _CSC_ or _HAKA_), and follow the authentication procedure.
-
-After successful authentication, you will see the dashboard.
-
-![Dashboard for the LUMI web interface](../assets/images/wwwLumiDash.png)
-
-Please read more how to use LUMI via the Web interface from the [Web interface](../runjobs/webui/index.md) section. 

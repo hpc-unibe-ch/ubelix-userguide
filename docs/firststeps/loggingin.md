@@ -1,90 +1,112 @@
-<!-- [terms-of-use]: https://www.lumi-supercomputer.eu/lumi-general-terms-of-use_1-0/
-[support-account]: https://lumi-supercomputer.eu/user-support/need-help/account/
-[myaccessid-profile]: https://mms.myaccessid.org/profile/
-[mycsc-profile]: https://my.csc.fi/
-[puttygen]: https://www.puttygen.com/#How_to_use_PuTTYgen
-[support]: https://lumi-supercomputer.eu/user-support/need-help/
-[registration]: ../accounts/registration.md
-[connecting]: ../connecting/connecting_.md
-[website-getstarted]: https://lumi-supercomputer.eu/get-started/
-[jump-ssh-key]: #logging-in
-[eidas-eduid]: https://puhuri.neic.no/user_guides/myaccessid_registration/ -->
-
-[helpdesk]: ../helpdesk/index.md
+[access]: ../firststeps/accessUBELIX.md
+[helpdesk]: ../support/index.md
 [setup-ssh-key]: ../firststeps/SSH-keys.md
 
 
 # Logging in (with an SSH client)
 
-!!! info
-	It is now also possible to [log in using the LUMI web interface](./loggingin-webui.md) 
+!!! caution "Requirement"
+    Login to UBELIX is only possible from within the UniBE network. If you want to connect from outside, you must first establish a VPN connection. For VPN profiles and instructions see [the official tutorial](http://www.unibe.ch/university/campus_and_infrastructure/rund_um_computer/internetzugang/access_to_internal_resources_via_vpn/index_eng.html).
 
-Connecting to LUMI via the command line is possible from all major OS. Once you
-have completed the steps to [setting up an SSH key pair][setup-ssh-key] and
-everything has synchronized, you can connect using an ssh client:
 
-```bash
-ssh -i <path-to-private-key> <username>@lumi.csc.fi
-```
+=== "From a terminal (all OS)"
 
-where you need to replace `<path-to-private-key>` with the path to the file
-which contains your **private** key and `<username>` with your own
-username.
+    Connecting to UBELIX via the command line is possible from all major OS. Once you
+    have [activated your account for UBELIX][access] you can connect using an ssh client:
+    
+    ```Bash
+    $ ssh <user>@submit02.unibe.ch
+    ```
+    
+    where you need to replace `<username>` with your own Campus Account username.
+    
+    When you connect for the first time, you
+    will also be asked to check the host key fingerprint of the system and need to
+    type `yes` in order to accept it. The fingerprints of the UBELIX login nodes are
+    listed in the table below. Please make sure that the host key fingerprint
+    matches one of these.
+    
+    At the password prompt enter your Campus Account password:
+    
+    ```Bash
+    $ ssh <user>@submit03.unibe.ch
+    Password:
+    ```
+    
+    !!! types tip ""
+        Usually there is no indication of typing when entering your password (not even asterisks or bullets). That's intended. Just enter your password and press 'enter'.
+    
+    After log in successfully you will see the welcome message and the command prompt:
+    
+    ```Bash
+    Rocky 9.3 Blue Onyx
+    
+    FQDN:      submit03.ubelix.unibe.ch
+    Processor: 128x AMD EPYC 7742 64-Core Processor
+    Kernel:    5.14.0-362.13.1.el9_3.x86_64
+    Memory:    128.223 GB
+    
+    [user@submit03 ~]$
+    ```
 
-You should have received your username via email when your account was created.
-There may be a delay of up to a couple of hours from registering your SSH key
-until your account is created on LUMI, please be patient. If you are still not
-able to connect, please contact the [user support team][helpdesk].
+=== "With MobaXTerm (Windows)"
 
-You will be prompted for the passphrase of the SSH key which is the one you
-entered when you generated the key. When you connect for the first time, you
-will also be asked to check the host key fingerprint of the system and need to
-type `yes` in order to accept it. The fingerprints of the LUMI login nodes are
-listed in the table below. Please make sure that the host key fingerprint
-matches one of these.
+    MobaXterm combines Terminal sessions with file transfer (scp/ftp) and X Window Server. There are many more features which are not described here. MobaXterm can be downloaded on the [MobaXterm Website](https://mobaxterm.mobatek.net/). There are two versions, portable and installation. You can choose either one.
+    
+    After installing and starting MobaXterm, a SSH session need to be configured:
+    
+     * Click 'Session' in the top left corner:
+     ![MobaXterm Start](../assets/images/mobaXterm_01_start.png "MobaXterm Start")
+     * In "SSH" tab:
+         - Set the remote host to a login node, e.g. submit01.unibe.ch
+         -  Enable the "Specify username" option and put your Campus Account short name in the corresponding box (here user ms20e149 will be used)
+     * In the "Advanced SSH settings"
+         - Set SSH-browser type to 'SCP (enhanced speed)'
+         -  Optionally, tick the 'Follow SSH path' button
+    ![MobaXterm Config](../assets/images/mobaXterm_02_sshConfig.png "MobaXterm Config")
+    
+    * From now one the settings are stored and you can access the session on the left at the star icon
+    ![MobaXterm Sessions](../assets/images/mobaXterm_02b_selectSession.png "MobaXterm Sessions")
+    
+    * MobaXterm will ask you to store the Password and manage a MasterPassword. 
+    
+    After starting the session, you should see the UBELIX login message and prompt. 
+    ![MobaXterm Sessions](../assets/images/mobaXterm_03_established.png "MobaXterm Overview")
+    On the left hand side a File browser is located. There the UBELIX file system can be browsed and files up or downloaded, e.g. using drag and drop or the context menue. 
+    ![MobaXterm File Browser](../assets/images/mobaXterm_04_scp.png "SCP pane")
 
-| Key type   | Fingerprint                                              |
+!!! tip "Login nodes"
+
+       There are four login nodes in UBELIX:
+
+       - submit01.unibe.ch
+       - submit02.unibe.ch
+       - submit03.unibe.ch
+       - submit04.unibe.ch
+
+       To access UBELIX, **you can choose any one**. If the load on a login node is high, you can log out and pick another one.
+
+
+## Host key fingerprints
+
+| Host | Fingerprint                                              |
 |--------- --|----------------------------------------------------------|
-| ED25519    | `SHA256:qCFZThjRw8nf0CiZ9rU7b6Zirjq8slAIl5r0xWaVoD0`     |
-| RSA        | `SHA256:ypbqdMWtk9ZdXEROkeEpv+3PCEXWjPLGI79IXGHe9ac`     |
-| ECDSA      | `SHA256:hY4mnRCYb8bRchTnVcFo7SqoHHHEsUh9Ym38F4sHN1Y`     |
+| submit01.unibe.ch | SHA256:ScUNCxSnHzfxeLIVB8WY98EvKoVhBujbz6RXaSOw1VA (RSA)<br> SHA256:qmMfIbwyosfLUsY8BMCTgj6HjQ3Im6bAdhCWK9nSiDs (ED25519) |
+| submit02.unibe.ch | SHA256:eRTZGWp2bvlEbl8O1pigcONsFZAVKT+hp+5lSQ8lq/A (ED25519)<br> SHA256:Q4M+Tv3XsAuFLPdv2t/x3X3QY3IDsKMbNBwFcLoQeS8 (RSA) |
+| submit03.unibe.ch | SHA256:IYp6P61TybgGdbBd4w9+bQpIk8Yc3XfYLHG0CslCs6Y (RSA)<br> SHA256:PUkldwWf86h26PSFHCkEGKsrYlXv668LeSnbHBrMoCQ (ED25519) |
+| submit04.unibe.ch | SHA256:+maM19oNjmc6wyHyQSq1eqNtFKPPrEs+fdQm5maZyN8 (RSA)<br> SHA256:D3cmfXkb40P7W935J2Un8sBUd4Sv2MNLkvz9isJOnu0 (ED25519) |
+
 
 ## Troubleshooting
 
-If you have trouble connecting to LUMI, you can run the SSH client with verbose
+If you have trouble connecting to UBELIX, you can run the SSH client with verbose
 output enabled to get more information about what happens when you try to connect:
 
 ```bash
-ssh -vvv -i <path-to-private-key> <username>@lumi.csc.fi
+ssh -vvv <username>@submit02.unibe.ch
 ```
 
-If you are unable to connect, and you contact the [user support team][helpdesk],
+If you are unable to connect, and you contact the [UBELIX support ][helpdesk],
 we recommend that you provide the output of this command as part of your
 support request. Please include the output as text (copy from terminal, paste
 into support request), not as pictures.
-
-In case you have forgotten your username, it can be retrieved via the different
-portals, depending on your resource allocator:
-
-- the Puhuri Portal by clicking on the **Remote accounts** in the left menu
-- myCSC by clicking on **My Profile** in the left menu
-- the SUPR portal under **Account > Existing Accounts**
-
-
-## LUMI login nodes (advanced)
-
-LUMI has several login nodes, for reliability and for sharing the interactive workload. The name `lumi.csc.fi` points automatically to one of the login nodes - the IP address to which it resolves will belong to one of:
-
-| Login node name     | IP Address          |
-|--------- -----------|---------------------|
-| `lumi-uan01.csc.fi` | 193.167.209.163     |
-| `lumi-uan02.csc.fi` | 193.167.209.164     |
-| `lumi-uan03.csc.fi` | 193.167.209.165     |
-| `lumi-uan04.csc.fi` | 193.167.209.166     |
-
-We recommend that you connect to `lumi.csc.fi` and not directly to a specific login node, but it is possible to do, and it may be necessary for certain advanced use cases.
-
-The IP number block used for external connections from LUMI is `193.167.209.128/26`.
-It contains the login nodes and also the NAT gateways for the compute nodes.
-You may need to open up your firewall for access from these IP addresses,
-if you want to connect to your own servers from inside LUMI.

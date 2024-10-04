@@ -1,82 +1,40 @@
----
-template: home.html
-hide:
-  - navigation
-  - toc
----
+# Welcome to the High Performance Computing (HPC) documentation of the University of Bern
 
-<div class="card" markdown>
+## Introduction
 
-- **Welcome**
+Official documentation site of the high performance computing and the HPC
+cluster UBELIX.
 
-    ---
+Currently, the UBELIX cluster runs around 320 compute nodes featuring ~12k CPU
+cores and 160 GPUs with almost one million GPU cores. The infrastructure is
+available to all University personnel for their scientific work. The cluster can
+also be used by students within a scope of a thesis or a course.
 
-    Welcome to the LUMI supercomputer user guide. To navigate this guide,
-    select a category from the navigation bar at the top of the page or use 
-    the search function.
+If your campus account is not yet activated for UBELIX, the [Getting Started Guide](general/quick-start.md)
+might be a good place to get you started.
 
-    You have not connected to LUMI yet? Please visit the first steps section to get started. 
+UBELIX features a plethora of software and applications, which is outlined on
+the page Software, but the users are free to compile and install their own
+software within their home directories.
 
-    [:octicons-arrow-right-24: First steps](firststeps/index.md)
+If you are wondering... UBELIX is an acronym and stands for **U**niversity of
+**Be**rn **Li**nu**x** Cluster (Naming similarities to known Gauls are purely
+coincidental and not intended in any way).
 
--  
+!!! note "Job Monitoroing"
+    See what is currently running on UBELIX on the [Job Monitoring](https://www.ubelix.unibe.ch/xmlqstat/) pages.
 
-    ---
-    
-    <center>
-        [:octicons-link-24: LUMI helpdesk](https://lumi-supercomputer.eu/user-support/need-help/) &nbsp;&nbsp;&nbsp;&nbsp;
-        [:octicons-link-24: LUMI status](https://lumi-supercomputer.eu/lumi-service-status/) &nbsp;&nbsp;&nbsp;&nbsp;
-        [:octicons-link-24: LUMI events](https://lumi-supercomputer.eu/events/) &nbsp;&nbsp;&nbsp;&nbsp;
-        [:octicons-link-24: LUMI training materials](https://lumi-supercomputer.github.io/LUMI-training-materials/)
-    </center>
-</div>
+## Acknowledging UBELIX
 
-<div class="grid cards" markdown>
+When you present results generated using our cluster UBELIX, we kindly ask you
+to acknowledge the usage of the cluster. We would also highly appreciate if you
+could send us a copy of your papers, posters and presentations mentioning the
+UBELIX cluster. Public visibility of our cluster and documenting results are
+important for us to ensure long-term funding of UBELIX.
 
--   **Discover the LUMI Hardware**
+Whenever the UBELIX infrastructure has been used to produce results used in a
+publication or poster, we kindly request citing the service in the
+acknowledgements:
 
-    ---
+    "Calculations were performed on UBELIX (https://www.id.unibe.ch/hpc), the HPC cluster at the University of Bern."
 
-    [:octicons-arrow-right-24: GPU partition](hardware/lumig.md)<br>
-    [:octicons-arrow-right-24: CPU partition](hardware/lumic.md)<br>
-    [:octicons-arrow-right-24: Visualization partition](hardware/lumid.md)
-
--   **Submitting a Job**
-
-    ---
-
-    [:octicons-arrow-right-24: Available Slurm partitions](runjobs/scheduled-jobs/partitions.md)<br>
-    [:octicons-arrow-right-24: Example GPU jobs](runjobs/scheduled-jobs/lumig-job.md)<br>
-    [:octicons-arrow-right-24: Example CPU jobs](runjobs/scheduled-jobs/lumic-job.md)
-
--   **Storage**
-
-    ---
-
-    [:octicons-arrow-right-24: Data storage options](storage/index.md)<br>
-    [:octicons-arrow-right-24: Using Lustre efficiently](storage/parallel-filesystems/lustre.md)<br>
-    [:octicons-arrow-right-24: Object storage](storage/lumio/index.md)
-
--   **Software**
-
-    ---
-
-    [:octicons-arrow-right-24: The software stacks](runjobs/lumi_env/softwarestacks.md)<br>
-    [:octicons-arrow-right-24: Installing software using EasyBuild](software/installing/easybuild.md)<br>
-    [:octicons-arrow-right-24: Spack on LUMI](software/installing/spack.md)
-
--   **Programming Environments**
-
-    ---
-
-    [:octicons-arrow-right-24: Cray programming environment](development/compiling/prgenv.md)<br>
-    [:octicons-arrow-right-24: Cray libraries](development/libraries/cray-libraries.md)<br>
-
--   **Debugging and Profiling**
-
-    ---
-
-    [:octicons-arrow-right-24: Cray performance analysis tool](development/profiling/perftools.md)<br>
-    [:octicons-arrow-right-24: Parallel debugging](development/debugging/gdb4hpc.md)
-
-</div>

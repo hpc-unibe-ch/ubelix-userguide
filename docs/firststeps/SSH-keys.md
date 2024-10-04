@@ -1,25 +1,21 @@
-[terms-of-use]: https://www.lumi-supercomputer.eu/lumi-general-terms-of-use_1-0/
-[support-account]: https://lumi-supercomputer.eu/user-support/need-help/account/
-[myaccessid-profile]: https://mms.myaccessid.org/profile/
-[mycsc-profile]: https://my.csc.fi/
-[puttygen]: https://www.puttygen.com/#How_to_use_PuTTYgen
-[support]: https://lumi-supercomputer.eu/user-support/need-help/
-[registration]: ../accounts/registration.md
-[connecting]: ../connecting/connecting_.md
-[website-getstarted]: https://lumi-supercomputer.eu/get-started/
 [jump-register-keys]: #register-your-public-key
-[eidas-eduid]: https://puhuri.neic.no/user_guides/myaccessid_registration/
 
 # Setting up SSH keypair
 
-If you want to use LUMI from a terminal, you need to register an SSH key pair. The SSH keys are the only way to connect to LUMI when using a Linux, macOS or Windows PowerShell terminal, or MobaXterm or PuTTY from Windows. There is no option for using passwords. 
+!!! tip
+    A SSH keypair for password-less access within the UBELIX HPC system is
+    automatically generated for all accounts since XX.XX.2024. Note that this
+    keypair is automatically rotated every X days and should therefore not be
+    used for any other purpose.
 
-LUMI only accepts SSH keys based on the RSA (4096 bit) or ed25519 algorithms.
+If you want to use UBELIX from a terminal, we recommend to register a SSH keypair. SSH keypairs serve as a means of identifying a user to a SSH server. When using SSH keys your password will never be send over the network.
+
+UBELIX only accepts SSH keys based on the RSA (4096 bit) or ed25519 algorithms.
 If possible, we recommend using ed25519.
 
 ## Generate your SSH keys
 
-If you already have an appropriate SSH key pair that you want to use with LUMI,
+If you already have an appropriate SSH key pair that you want to use with UBELIX,
 you may skip to [registering your public key][jump-register-keys]. If not,
 start by generating an SSH key pair as detailed below.
 
@@ -30,37 +26,26 @@ start by generating an SSH key pair as detailed below.
     an ed25519 key:
 
     ```bash
-    ssh-keygen -t ed25519
+    ssh-keygen -t ed25519 -f $HOME/.ssh/id_ed25519_ubelix
     ```
 
-    or, alternative, use the following command to generate a 4096 bit RSA key:
-
-    ```bash
-    ssh-keygen -t rsa -b 4096
-    ```
-
-    You will be prompted for a file name and location where to save the
-    key. Accept the defaults by pressing ++enter++. Alternatively, you can 
-    choose a custom name and location and add it interactively or as a
-    command line argument with for example `-f /home/username/.ssh/id_rsa_lumi`.
-
-    Next, you will be asked for a passphrase. Please choose a secure
+    You will be asked for a passphrase. Please choose a secure
     passphrase. It should be at least 8 (preferably 12) characters long and
     should contain numbers, letters and special characters. **Do not leave the
     passphrase empty**.
 
     After that an SSH key pair is created, i.e. a pair of files containing
-    the public and private keys, e.g. files named `id_rsa_lumi`
-    (the **private** key) and `id_rsa_lumi.pub` (the **public** key) in your
-    `/home/username/.ssh/` directory.
+    the public and private keys, e.g. files named `id_ed25519_ubelix`
+    (the **private** key) and `id_ed25519_ubelix.pub` (the **public** key) in your
+    `/home/<username>/.ssh/` directory.
 
-=== "With MobaXTerm or PuTTY (Windows)"
+=== "With MobaXTerm (Windows)"
 
-    An SSH key pair can be generated with the PuTTygen tool or with MobaXterm 
-    (**Tools :octicons-arrow-right-16: MobaKeyGen**). Both tools are identical.
+    An SSH key pair can be generated with MobaXterm
+    (**Tools :octicons-arrow-right-16: MobaKeyGen**).
     
-    In order to generate your key pairs for LUMI, choose the option RSA and
-    set the number of bits to 4096. The, press the *Generate* button.
+    In order to generate your key pairs for UBELIX, choose the option Ed25519. 
+    Then, press the *Generate* button.
 
     <figure>
       <img src="../../assets/images/win-keygen-step1.png" width="400" alt="Create SSH key pair with windows - step 1">
@@ -84,9 +69,9 @@ start by generating an SSH key pair as detailed below.
 
     The next step is to save your public and private key. Click on the *Save 
     public key* button and save it to the desired location (for example, with 
-    `id_rsa_lumi.pub` as a name). Do the same with your private key by clicking
+    `id_ed25519_ubelix.pub` as a name). Do the same with your private key by clicking
     on the *Save private key* button and save it to the desired location (for 
-    example, with `id_rsa_lumi` as a name).
+    example, with `id_ed25519_ubelix` as a name).
 
     !!! note "Key format"
 
@@ -112,41 +97,63 @@ start by generating an SSH key pair as detailed below.
 
 !!! warning
     The private key should never be shared with anyone, not even
-    with LUMI staff. It should also be stored only on your local computer
-    (public key can be safely stored in cloud services). Protect it with a good
+    with UBELIX staff. It should also be stored only on your local computer
+    (public keys can be safely stored in cloud services). Protect it with a good
     password! Otherwise, anyone with access to the file system can steal your
     SSH key.
 
 ## Register your public key
 
-=== "For regular users (with a non-Finnish allocation)"
+To register your ssh key with your UBELIX account the generated public key need to be added to the `~/.ssh/authorized_keys` file in your UBELIX account. This step can be done by simply issuing from your terminal:
 
-    Now that you have generated your key pair, you need to register your **public** key
-    in your [:material-account: **MyAccessID user profile**][myaccessid-profile]. From there, the public key will be 
-    copied to LUMI.
+```bash
+ssh-copy-id -i ~/.ssh/id_ed25519_ubelix.pub `<alias>`
+```
 
-    To register your key, click on the *Settings* item of the menu on the left
-    as shown in the figure below. Then select *SSH keys* and click the *New key* button. Now copy and paste the content of your **public** key file in the text area and click the *Add SSH key* button.
+If the previous steps were successful you can now login to UBELIX using your SSH
+keypair using 
 
-    <figure>
-      <img src="../../assets/images/MyAccessID_ssh-key.png" width="480" alt="Screenshot of user profile settings to setup ssh public key">
-      <figcaption>MyAccessID Own profile information to add ssh public key.</figcaption>
-    </figure>
+```bash
+ssh -i ~/.ssh/id_ed25519_ubelix <user>@submit01.unibe.ch
+```
+Note that you will be prompted for the passphrase of your SSH-key instead of your
+Campus Account password.
 
-=== "With a Finnish allocation"
+## Tweaking your SSH config
 
-    Now that you have generated your key pair, you need to register your
-    **public** key in your MyCSC [:material-account: **user profile**][mycsc-profile].
+To simplify the login procedure you can tweak the local SSH configuration by adding a host declaration to `~/.ssh/config` on your local desktop/laptop. This way we can omit typing the username and ssh-key from our `ssh` invocation. Note that you will need to substitute your own Campus Account username:
 
-    To register your key with [MyCSC][mycsc-profile], click on the *Profile* item of the menu on the left side of the screen. If your browser window is narrow, the navigation might be hidden, in which case you need to open it from the top-right button. In the lower right corner of the *Profile* page there is a box which reads *SSH PUBLIC KEYS*. Click the *Add key* button (you may need to re-login). Paste the content of your **public** key in the text area which reads *Key*. Omit the ending of the key file that has your local username and the name of your computer. It should look like
+```bash
+~/.ssh/config
 
-    ```bash
-    ssh-ed25519 AAAAC3NzaC1lZDI....I3J
-    ```
+Host ubelix
+    Hostname submit02.unibe.ch
+    User <user>
+    IdentityFile ~/.ssh/id_ed25519_ubelix
+    ServerAliveInterval 60
+```
 
-    Add a title, e.g., *lumi*, and then click *Add*. 
+From now on you can log in to the cluster by using the specified alias:
 
+```
+ssh ubelix
+```
 
-After registering your SSH key, there can be a couple of hours delay until it
-is synchronized to LUMI and your account is created. **You will receive your
-username via email once your account has been created**.
+!!! info "SSH session timeout"
+
+    In the definition above we silently introduced the `ServerAliveInterval 60` option. If a SSH connection goes idle for a specific amount of time (default 10 minutes), you may be confronted with a `"Write failed: Broken pipe"` error message or the connection is simply frozen, and you are forced to log in again. To prevent this from happening, we configure the client to periodically send a message to trigger a response from the remote server through the `ServerAliveInterval` option
+
+### SSH Agent
+
+By this point you have replaced typing your campus account password by typing your ssk-key passphrase every time you login to UBELIX. But you can use the helper tool `ssh-agent` to securely save your passphrase, so you do not have to re-enter it all the time.
+
+The behavior of `ssh-agent` depends on the flavor and version of your operating system. On MacOS your keys can be saved in the system’s keychain. Most Linux installations will automatically start `ssh-agent` when you log in.
+
+Add the key to ssh-agent:
+
+```bash
+ssh-add ~/.ssh/id_ed25519_ubelix
+```
+
+You will now have to provide your ssh key's passphrase once per reboot of your device.
+
