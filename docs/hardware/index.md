@@ -1,31 +1,25 @@
 # Overview
 
-[lumi-c]: ../hardware/lumic.md
-[lumi-g]: ../hardware/lumig.md
-[lumi-d]: ../hardware/lumid.md
+[cpu-node]: ../hardware/cpu.md
+[gpu-node]: ../hardware/gpu.md
 [network]: ../hardware/network.md
-[lumi-top500]: https://top500.org/system/180048/
 
----
-Here you find a description of the LUMI system architecture and the different
-hardware partitions available on LUMI.
+[slurm]: https://slurm.schedmd.com/documentation.html 
 
----
+**UBELIX** (University of Bern Linux Cluster) is a HPC cluster that currently features ~12k CPU cores and 160 GPUs.
+It is a heterogeneous cluster, meaning UBELIX consists of different generations of compute nodes. Compute nodes, front-end servers and the storage are interconnected through a high speed [Infiniband network][network]. UBELIX is used by various institutes and research groups within all faculties at the University of Bern.
 
+## High-level system overview
 
-LUMI is one of the three European pre-exascale supercomputers. It's an HPE Cray
-EX supercomputer consisting of several hardware partitions targeted different
-use cases. All the hardware partitions are connected via an HPE Slingshot 11
-high-speed [interconnect][network]. As of 06/2024, LUMI ranks fifth on the
-[top500.org list][lumi-top500] and is currently the fastest supercomputer in
-Europe.
+![System Overview Diagram](../assets/images/system_overview.png "System Overview Diagram")
 
-The primary compute power in LUMI is found in the [LUMI-G][lumi-g] hardware
-partition which features GPU accelerated nodes using AMD Instinct MI250X GPUs.
-In addition to this, there is a smaller [LUMI-C][lumi-c] CPU-only hardware
-partition that features AMD EPYC "Milan" CPUs, as well as a small
-[LUMI-D][lumi-d] data analytics hardware partition featuring large memory nodes
-(4 TB) and some NVIDIA A40 GPUs for data visualization.
+UBELIX can only be reached within the university network. User landing point are
+the login nodes, where jobs can be prepared and submitted. Computational tasks
+are scheduled and managed on the compute nodes using [SLURM][slurm], the workload
+manager. All compute nodes as well as the login nodes have access to the
+parallel file system.
+
+UBELIX is a heterogeneous machine, consisting of different architectures. The majority of the CPU compute power in UBELIX is found in the [AMD (epyc)][cpu-node] hardware partition that features AMD EPYC CPUs and a smaller [Intel Broadwell (bdw)][cpu-node] partition with Intel Xeon processors. In addition to this, there is a [GPU][gpu-node] partition which features GPU accelerated nodes with a variety of GPUs.
 
 
 

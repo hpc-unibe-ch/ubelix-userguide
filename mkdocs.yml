@@ -1,6 +1,6 @@
 site_name: UBELIX User Guide
-repo_name: 'hpc-unibe-ch/hpc-docs'
-repo_url: 'https://github.com/hpc-unibe-ch/hpc-unibe-ch.github.io'
+repo_name: 'hpc-unibe-ch/ubelix-userguide'
+repo_url: 'https://github.com/hpc-unibe-ch/ubelix-userguide'
 edit_uri: 'edit/main/docs'
 site_description: >-
   Instructions, user guides and tutorials for the use of UBELIX, the HPC cluster of the University of Bern.
@@ -16,9 +16,8 @@ nav:
       - Next steps: firststeps/nextsteps.md
   - Hardware:
       - Overview: hardware/index.md
-      - GPU nodes - LUMI-G: hardware/lumig.md
-      - CPU nodes - LUMI-C: hardware/lumic.md
-      - Data analytics nodes - LUMI-D: hardware/lumid.md
+      - CPU nodes: hardware/cpu.md
+      - GPU nodes: hardware/gpu.md
       - Network and interconnect: hardware/network.md
   - Run jobs:
       - Overview: runjobs/index.md
