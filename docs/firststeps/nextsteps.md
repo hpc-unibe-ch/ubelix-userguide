@@ -8,11 +8,14 @@ hide:
 [support]: ../support/index.md
 [software]: ../software/index.md
 [development]: ../development/index.md
+[quickstart]: ./quickstart.md
 
 
 # Next steps
 
 Depending on your needs of UBELIX, you may want to take a look at:
+
+- The [**Quickstart**][quickstart] section to get a brief overview on the basic UBELIX workflow.
 
 - The [**Hardware**][Hardware] section to get to know the UBELIX system architecture and the different hardware partitions available on UBELIX.
 
