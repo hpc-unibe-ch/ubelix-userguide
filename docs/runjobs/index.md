@@ -2,24 +2,19 @@
 
 [software-overview]: ../software/index.md
 [firststeps-loggingin]: ../firststeps/loggingin.md
-[lumi-c]: ../hardware/lumic.md
-[lumi-g]: ../hardware/lumig.md
-[lumi-d]: ../hardware/lumid.md
 [slurm-quickstart]: ../runjobs/scheduled-jobs/slurm-quickstart.md
-[module-environment]: ../runjobs/lumi_env/Lmod_modules.md
-[software-stacks]: ../runjobs/lumi_env/softwarestacks.md
+[module-environment]: ../runjobs/ubelix_env/Lmod_modules.md
 [data-storage-options]: ../storage/index.md
 [billing-policy]: ../runjobs/lumi_env/billing.md
 
 ---
 
-Here you find general descriptions of how to run jobs on LUMI, i.e. how to run your scientific software using the job scheduler on LUMI.
-In this section, you also find general information about the LUMI environment, as well as the LUMI web interface that you can use to run your applications on LUMI instead of traditionally using a terminal.
-If you are looking for ways to install your software on LUMI or advice for a specific application, consult the [software section][software-overview] instead.
+Here you find general descriptions of how to run jobs on UBELIX, i.e. how to run your scientific software using the job scheduler, general information about the UBELIX environment, as well as the new UBELIX web interface that you can use instead of the traditional approaxh using a terminal.
+If you are looking for ways to install your software on UBELIX or advice for a specific application, consult the [software section][software-overview] instead.
 
 ---
 
-When you log in to LUMI, you get access to one of the
+When you log in to UBELIX, you access one of the
 login nodes. These login nodes are shared by all users and are only intended
 for simple management tasks, e.g.
 
@@ -30,25 +25,30 @@ for simple management tasks, e.g.
 - light pre- and postprocessing (a few cores / a few GB of memory)
 
 All compute heavy tasks must be submitted through the job scheduler such that
-they are run on the compute nodes in
-[LUMI-G][lumi-g]/[LUMI-C][lumi-c]/[LUMI-D][lumi-d].
+they are run on the compute nodes.
 
-The job scheduler used on LUMI is Slurm.
-To get started using Slurm on LUMI, read the [Slurm quickstart guide][slurm-quickstart].
 
 !!! warning
 
     All tasks not adhering to the above fair use rules for the login nodes will
     be terminated without warning.
 
-Also, you may want to familiarize yourself with the LUMI environment:
 
-- Read the [module environment][module-environment] page to learn more about
-how to use the module system on LUMI to find already installed software and to
+Before you can run jobs on UBELIX you will need to 
+
+- install your software stack
+- understand the type of job your trying to run and find suitable partition
+- decide where to put your data and get your data there
+- create a job script to launch your job
+- submit the job
+
+If you're a new user please familiarize yourself with the UBELIX environment:
+
+- Read the [Slurm quickstart guide][slurm-quickstart] to get started submitting
+ jobs through the UBELIX job scheduler.
+- Read the [module environment][module-environment] page to learn
+how to use the module system on UBELIX to find already installed software and to
 manage your own software installations.
-- Read the [software stacks][software-stacks] page to learn more about the
-  software is already centrally installed on LUMI.
+- Read the [software] pages to learn TODO!
 - Read the [data storage options][data-storage-options] page to learn more
   about where to store your data.
-- Read the [billing policy][billing-policy] page to learn more about how you
-  are billed for your use of LUMI.
