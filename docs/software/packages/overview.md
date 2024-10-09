@@ -1,14 +1,4 @@
-# CSC installed software collection
-
-!!! info "Note"
-    Software installed under `/appl/local` are maintained by the respective
-    local organizations.
-
-Load the CSC module tree into use with:
-
-```bash
-module use /appl/local/csc/modulefiles
-```
+# Overview
 
 Available software:
 
@@ -40,3 +30,7 @@ Available software:
 See more information in [Docs CSC](https://docs.csc.fi/apps/by_system/#lumi).
 If you encounter any issues, don't hesitate to contact the
 [LUMI User Support Team](https://lumi-supercomputer.eu/user-support/need-help/).
+
+- CP2K: https://lumi-supercomputer.github.io/LUMI-EasyBuild-docs/c/CP2K/
+- PyTorch: https://lumi-supercomputer.github.io/LUMI-EasyBuild-docs/p/PyTorch/
+- ParaView: https://lumi-supercomputer.github.io/LUMI-EasyBuild-docs/p/ParaView

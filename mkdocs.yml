@@ -19,76 +19,64 @@ nav:
       - CPU nodes: hardware/cpu.md
       - GPU nodes: hardware/gpu.md
       - Network and interconnect: hardware/network.md
-  - Run jobs:
+  - Running jobs:
       - Overview: runjobs/index.md
+      - Partitions / QoS: slurm/partitions.md
       - Web interface:
-          - Introduction: runjobs/webui/index.md
+          - Introduction: runjobs/ondemand/index.md
           - Interactive applications:
-              - Overview: runjobs/webui/interactive-apps.md
-              - Desktop: runjobs/webui/desktop.md
-              - Julia-Jupyter: runjobs/webui/julia-jupyter.md
-              - Jupyter: runjobs/webui/jupyter.md
-              - Jupyter for courses: runjobs/webui/jupyter-for-courses.md
-              - TensorBoard: runjobs/webui/tensorboard.md
-              - Visual Studio Code: runjobs/webui/vscode.md
-          - LUMI environment:
-              - Module environment: runjobs/lumi_env/Lmod_modules.md
-              - Software stacks: runjobs/lumi_env/softwarestacks.md
-              - Daily management: runjobs/lumi_env/dailymanagement.md
-              - Data storage options: storage/index.md
-              - Billing policy: runjobs/lumi_env/billing.md
-          - Batch jobs:
-              - Slurm quickstart: runjobs/scheduled-jobs/slurm-quickstart.md
-              - Slurm partitions: runjobs/scheduled-jobs/partitions.md
-              - Batch jobs: runjobs/scheduled-jobs/batch-job.md
-              - Full machine runs: runjobs/scheduled-jobs/hero-runs.md
-              - GPU examples: runjobs/scheduled-jobs/lumig-job.md
-              - CPU examples: runjobs/scheduled-jobs/lumic-job.md
-              - Distribution and binding: runjobs/scheduled-jobs/distribution-binding.md
-              - Job array: runjobs/scheduled-jobs/throughput.md
-              - Interactive jobs: runjobs/scheduled-jobs/interactive.md
-              - Container jobs: runjobs/scheduled-jobs/container-jobs.md
-              - Julia scheduled jobs: runjobs/scheduled-jobs/julia.md
+              - Jupyter: runjobs/ondemand/jupyter.md
+              - RStudio: runjobs/ondemand/rstudio.md
+              - Visual Studio Code: runjobs/ondemand/code-server.md
+          - Troubleshooting: runjobs/ondemand/troubleshooting.md
+      - Basic batch jobs:
+          - Slurm quickstart: runjobs/scheduled-jobs/slurm-quickstart.md
+          - Submitting jobs: slurm/submission.md
+          - Monitoring Jobs: slurm/monitoring-jobs.md
+          - Deleting Jobs: slurm/deleting-jobs.md
+          - GPU Jobs: slurm/gpus.md
+          - Interactive jobs: runjobs/scheduled-jobs/interactive.md
+          - Batch jobs: runjobs/scheduled-jobs/batch-job.md
+          - Container jobs: runjobs/scheduled-jobs/container-jobs.md
+      - Advanced topics:
+          - Job array: runjobs/scheduled-jobs/throughput.md
+          - Array Jobs with Slurm: slurm/array-jobs.md
+          - Job dependencies: slurm/dependencies.md
+          - Investigating a Job Failure: slurm/investigating-job-failure.md
+          - Checkpointing: slurm/checkpointing.md
+          - Fair Share: slurm/fair-share.md
+          - Preemption: runjobs/scheduled-jobs/preemption.md
   - Software:
       - Overview: software/index.md
-      - Install policy: software/policy.md
+      - Software environment: software/Lmod_modules.md
       - Installing software:
-          - EasyBuild: software/installing/easybuild.md
-          - Spack: software/installing/spack.md
           - Python packages: software/installing/python.md
-          - LUMI container wrapper: software/installing/container-wrapper.md
-      - Containers:
-          - Singularity/Apptainer: software/containers/singularity.md
+          - R packages: software/installing/python.md
+          - EasyBuild: software/installing/easybuild.md
+          - Containers: software/containers/apptainer.md
       - Software guides:
-          - Software library: https://lumi-supercomputer.github.io/LUMI-EasyBuild-docs/
-          - CP2K: https://lumi-supercomputer.github.io/LUMI-EasyBuild-docs/c/CP2K/
-          - PyTorch: https://lumi-supercomputer.github.io/LUMI-EasyBuild-docs/p/PyTorch/
-          - ParaView: https://lumi-supercomputer.github.io/LUMI-EasyBuild-docs/p/ParaView
-          - QuantumESPRESSO: https://lumi-supercomputer.github.io/LUMI-EasyBuild-docs/q/QuantumESPRESSO/
-          - VASP: https://lumi-supercomputer.github.io/LUMI-EasyBuild-docs/v/VASP/
-      - Local software collections:
-          - CSC: software/local/csc.md
+          - Overview: software/packages/overview.md
+          - JupyterLab: software/JupyterLab.md
+          - MATLAB: software/matlab.md
+          - Parallel BZIP2: software/bzip2.md
+          - ParaView: software/ParaView.md
+          - R: software/r.md
+          - Visual Studio Code: software/VisualStudioCode.md
   - Developing:
       - Overview: development/index.md
       - Compiling:
           - Programming environment: development/compiling/prgenv.md
           - Cray compilers: development/compiling/cce.md
           - GNU compilers: development/compiling/gnu.md
-      - High performance libraries:
-          - Cray libraries: development/libraries/cray-libraries.md
-      - Optimizing for LUMI:
-          - Using hugepages: development/optimizing/hugepages.md
       - Debugging:
           - Parallel debugging: development/debugging/gdb4hpc.md
           - Memory debugging: development/debugging/valgrind4hpc.md
           - Crash or deadlock: development/debugging/stat-atp.md
-      - Performance analysis:
-          - Performance analysis strategies: development/profiling/strategies.md
-          - Cray Performance Analysis Tool: development/profiling/perftools.md
   - Storage:
       - Overview: storage/index.md
       - Quota: storage/quota.md
       - Scratch: storage/scratch.md
+  - Costs and Investments: costs_investments.md
   - Support:
       - Support: support/index.md
       - Data Science Lab: support/dsl.md
