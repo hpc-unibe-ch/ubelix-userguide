@@ -51,17 +51,17 @@ nav:
       - Software environment: software/Lmod_modules.md
       - Installing software:
           - Python packages: software/installing/python.md
-          - R packages: software/installing/python.md
+          - R packages: software/installing/r.md
           - EasyBuild: software/installing/easybuild.md
           - Containers: software/containers/apptainer.md
       - Software guides:
           - Overview: software/packages/overview.md
-          - JupyterLab: software/JupyterLab.md
-          - MATLAB: software/matlab.md
-          - Parallel BZIP2: software/bzip2.md
-          - ParaView: software/ParaView.md
-          - R: software/r.md
-          - Visual Studio Code: software/VisualStudioCode.md
+          #- JupyterLab: software/JupyterLab.md
+          #- MATLAB: software/matlab.md
+          #- Parallel BZIP2: software/bzip2.md
+          #- ParaView: software/ParaView.md
+          - R: software/packages/r.md
+          #- Visual Studio Code: software/VisualStudioCode.md
   - Developing:
       - Overview: development/index.md
       - Compiling:

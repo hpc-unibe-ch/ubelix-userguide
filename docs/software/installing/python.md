@@ -4,16 +4,7 @@
 [pip-virt-env]: https://packaging.python.org/en/latest/tutorials/installing-packages/#creating-virtual-environments
 [python]: https://www.python.org/
 [scientific-python]: https://scientific-python.org/
-
-[container-virt-env-example]: ../../software/packages/pytorch.md#installing-other-packages-along-the-containers-pytorch-installation
-[cotainr]: ../containers/singularity.md#building-containers-using-the-cotainr-tool
-[csc-software-stack]: ../local/csc.md
-[lumi-software-stack]: ../../runjobs/lumi_env/softwarestacks.md
-[lustre]: ../../storage/parallel-filesystems/lustre.md
-[pull-container]: ../containers/singularity.md#pulling-container-images-from-a-registry
-[singularity-build]: ../containers/singularity.md#building-apptainersingularity-sif-containers
-[singularity-containers]: ../containers/singularity.md
-[tykky]: ./container-wrapper.md
+[pre-installed]: ../Lmod_modules.md
 
 # Installing Python packages
 
@@ -21,126 +12,270 @@ Over the past decade, the [Python programming language][python] and [Scientific
 Python][scientific-python] packages like NumPy, SciPy, JAX, and PyTorch have
 gained a lot of popularity in the data science and HPC communities.
 
-We do support using Scientific Python packages on LUMI.
-However, care must be taken to *install* such packages in a way that *plays well with LUMI*.
-
-!!! warning "Please don't install Python packages directly"
-    To to provide the best user experience, it is **strongly discouraged**
-    to install Python packages directly to the user home folder,
-    `/scratch`, `/project`, etc. using [Conda][conda], [pip][pip], or similar
-    package management tools. Please read this page carefully for better
-    alternatives.
-
 A Python installation usually consists of the Python interpreter, the Python
 standard library and one or more third party Python packages. Such Python
 packages may include both compiled code and a lot of so-called Python modules,
 i.e. a lot of small files containing Python code. A typical
 [Conda][conda] environment tends to contain tens to hundreds of thousands of
-relatively small files.
+relatively small files filling up your file quota. Additionally, installing
+such a large number of small files to our storage can put a lot of strain on the
+filesystem and can lead to suboptimal cluster performance.
 
-Installing such a large number of small files to the user home folder or shared
-locations like `/scratch`, `/project`, or even `/flash`, and trying to load
-them from multiple processes at the same time, puts a lot of strain on the
-[Lustre file system][lustre] serving these storage locations. Lustre simply
-isn't designed for such use cases. Thus, to maintain good file system
-performance for all users (it is a shared file system), care must be taken when
-installing Python packages on LUMI.
+!!! tip "Expert tip: Use containerized environments"
 
-**Which installation method should I use then?**
+    In order to circumvent the issue of "lots of tiny files" and potentially
+    degraded performance, you can wrap your Python environment in a container
+    and run your simulations from within this isolated environment. Note that 
+    this approach is especially useful if the Python environment is very static
+    and is going to be used over long periods of time!
 
-The best way to get access to a Python installation on LUMI depends on the use
-case. Below, we provide an overview of recommended ways to get access to Python
-installations on LUMI.
+## Anaconda (`conda`)
+
+[Conda](https://docs.conda.io/en/latest/) is an open source environment and package management system. With Conda you can create independent environments, where you can install applications such as python and R, together with any packages which will be used by these applications. The environments are independent, with the Conda package manager managing the binaries, resolving dependencies, and ensuring that package used in multiple environments are stored only once. In a typical setting, each user has their own installation of a Conda and a set of personal environments.
+
+!!! warning "Generic binaries"
+
+    [Conda][conda] installs generic binaries that may be suboptimal for the performance on UBELIX clusters. In most situations it is recommended to use the [pre-installed libraries][pre-installed] over the version that can be installed from `conda`.
+
+### Channels
+
+Conda [channels](https://docs.conda.io/projects/conda/en/latest/user-guide/concepts/channels.html#what-is-a-conda-channel) are the locations where packages are stored. There are also multiple channels, with some important channels being:
+
+- [`defaults`](https://repo.anaconda.com/pkgs/), the default channel,
+- [`anaconda`](https://anaconda.org/anaconda), a mirror of the default channel,
+- [`bioconda`](https://anaconda.org/bioconda), a distribution of bioinformatics software, and
+- [`conda-forge`](https://anaconda.org/conda-forge), a community-led collection of recipes, build infrastructure, and distributions for the conda package manager.
+
+The most useful channel that comes pre-installed in all distributions, is Conda-Forge. Channels are usually hosted in the [official Anaconda page](https://anaconda.org/), but in some rare occasions [custom channels](https://conda.io/projects/conda/en/latest/user-guide/tasks/create-custom-channels.html) may be used. For instance the [default channel](https://repo.anaconda.com/pkgs/) is hosted independently from the official Anaconda page. Many channels also maintain web pages with documentation both for their usage and for packages they distribute:
+
+- [Default Conda channel](https://docs.anaconda.com/free/anaconda/reference/default-repositories/)
+- [Bioconda](https://bioconda.github.io/)
+- [Conda-Forge](https://conda-forge.org/)
+
+### Loading the `Anaconda3` module
+
+The `Anaconda3` distribution is provided as a module on UBELIX. To use any
+`conda` commands, load the module using
+
+```bash
+module load Anaconda3
+```
+
+### Using `conda`
+
+When using `conda` the system may complain about:
+
+```Bash
+CommandNotFoundError: Your shell has not been properly configured to use 'conda activate'.
+To initialize your shell, run
+    $ conda init <SHELL_NAME>
+Currently supported shells are:
+  - bash
+  - fish
+  - tcsh
+  - xonsh
+  - zsh
+  - powershell
+See 'conda init --help' for more information and options.
+IMPORTANT: You may need to close and restart your shell after running 'conda init'.
+```
+
+Please do not run `conda init`. Instead initialise the conda environment using:
+
+``` Bash 
+module load Anaconda3
+eval "$(conda shell.bash hook)"
+```
+
+This should also be used in your batch submission scripts when working with conda environments.
+
+### Managing environments
+
+As an example, the creation and use of an environment for pandas jobs is presented. The command,
+```bash
+conda create --name pandas
+```
+creates an environment named `pandas`. The environment is activated with the command
+```bash
+conda activate pandas
+```
+anywhere in the file system.
+
+Next, install the base R environment package that contains the R program, and any R packages required by the project. To install packages, first ensure that the `pandas` environment is active, and then install any package with the command
+```bash
+conda install <package_name>
+```
+all the required packages. Quite often, the channel name must also be specified:
+```bash
+conda install --channel <channel_name> <package_name>
+```
+Packages can be found by searching the [conda-forge channel](https://anaconda.org/conda-forge).
+
+```bash
+conda install --channel conda-forge pandas
+```
+will install all the components required to use the *pandas* pacakge in Python. After all the required packages have been installed, the environment is ready for use.
+
+Packages in the conda-forge channel come with instructions for their installation. Quite often the channel is specified in the installation instructions, `-c conda-forge` or `--channel conda-forge`. 
+
+After work in an environment is complete, deactivate the environment,
+```bash
+conda deactivate
+```
+to ensure that it does not interfere with any other operations. In contrast to [modules](modules.md), Conda is designed to operate with a single environment active at a time. Create one environment for each project, and Conda will ensure that any package that is shared between multiple environments is installed once.
+
+### Using environments in submission scripts
+
+Since all computationally heavy operations must be performed in compute nodes, Conda environments are also used in jobs submitted to the queuing system. Returning to the pandas example, a submission script running a single core pandas job can use the `pandas` environment as follows:
+```
+#SBATCH --job-name pandas-test-job
+#SBATCH --nodes 1
+#SBATCH --ntasks-per-node 1
+#SBATCH --cpus-per-task 1
+#SBATCH --time=0-02:00:00
+#SBATCH --partition epyc2,bdw
+
+echo "Launched at $(date)"
+echo "Job ID: ${SLURM_JOBID}"
+echo "Node list: ${SLURM_NODELIST}"
+echo "Submit dir.: ${SLURM_SUBMIT_DIR}"
+echo "Numb. of cores: ${SLURM_CPUS_PER_TASK}"
+
+module load Anaconda3
+eval "$(conda shell.bash hook)"
+
+conda activate pandas
+
+python pandas_test.py
+
+conda deactivate
+```
+
+### Cleaning up package data
+
+The Conda environment managers download and store a sizable amount of data to provided packages to the various environments. Even though the package data are shared between the various environments, they still consume space in your or your project's account.
+
+There are two main sources of unused data, the compressed archives of the packages that Conda stores in its cache when downloading a package, and the data of removed packages. All unused data can be removed with the command
+```bash
+conda clean --all
+```
+that opens up an interactive dialogue with details about the operations performed. You can follow the default option, unless you have manually edited any files in you package data directory (default location `${HOME}/conda`).
+
+!!! info "Updating environments to remove old package versions"
+	As we create new environments, we often install the latest version of each package. However, if the environments are not updated regularly, we may end up with different versions of the same package across multiple environments. If we have the same version of a package installed in all environments, we can save space by removing unused older versions.
+
+	To update a package across all environments, use the command
+	```bash
+	for e in $(conda env list | awk 'FNR>2 {print $1}'); do conda update --name $e <package name>; done
+	```
+
+    **WARNING:** Ensure this is really what you want! Sometimes you need a
+    specific (older) version of a package in an environment because of
+    compatibility!
+
+	After updating packages, the `clean` command can be called to removed the data of unused older package versions.
+
+_Sources_
+
+- [Oficial Conda `clean` documentation](https://docs.conda.io/projects/conda/en/latest/commands/clean.html)
+- [Understanding Conda `clean`](https://stackoverflow.com/questions/51960539/where-does-conda-clean-remove-packages-from)
+
+### Pip
+
+In some cases Python packages are not avaible through the conda channels and
+need to be installed through pip. In this case simply ensure that `pip` is
+indeed set to the `pip` executable within the environment
+
+```bash
+which pip
+~/.conda/envs/<env name>/bin/pip
+```
+
+For instance, assume that a `mkdocs` project requires the following packages:
+
+- `mkdocs`
+- `mkdocs-minify-plugin`
+
+The package `mkdocs-minify-plugin` is less popular and thus is is not available though a Conda channel, but it is available in PyPI. Activate your `conda` environment and install the required packages with `pip`
+
+```bash
+pip install --upgrade mkdocs mkdocs-minify-plugin
+```
+
+inside the environment. The packages will be installed inside a directory that `conda` created for the Conda environment, for instance
+```
+${HOME}/conda/envs/mkdocs
+```
+along side packages installed by `conda`. As a results, 'system-wide' installations with `pip` inside a Conda environment do not interfere with system packages.
+
+!!! warning "Do not install packages in Conda environments with pip as a user"
+    User installed packages (e.g.`pip install --user --upgrade mkdocs-minify-plugin`) are installed in the same directory for all environments, typically in `~/.local/`, and can interfere with other versions of the same package installed from other Conda environments.
+
+## Python Virtual Environments (virtualenv)
 
 !!! warning "The default Python is the OS Python"
-    When you log into LUMI, running `python3` without loading a module or using
+    When you log into UBELIX, running `python` without loading a module or using
     a container will result in using the operating system Python installation.
-    This is quite an old Python installation (version 3.6) without any Scientific
-    Python packages, which is likely not what you want.
+    This is a Python 3.9 which can't be upgraded!
+    Make sure this is what you want before continuing with this section!
 
-## Generally recommended installation methods
+Virtualenv is the Pythons native way of isolating a particular python environment from the default one. Each environment resides in a self-contained directory, so multiple virtualenvs can co-exist side by side with different versions of tools or dependencies installed. The downside of this approach is that the Python version can't be changed. If you need to be able to run specific versions of Python, please use the [Conda] installation method.
 
-In general, we recommend using [Singularity/Apptainer
-containers][singularity-containers] for managing Python installations. Using a container solves the "many
-small files" performance problem and makes it easy to manage multiple different
-Python environments at the same time. To use a container, you may either [use an existing
-container](#use-an-existing-container) or [build a container tailored to your
-needs](#use-a-container-you-build-specifically-tailored-to-your-needs).
+### Creating a virtualenv
 
-### Use an existing container
+We can create a virtualenv:
 
-If somebody is already publishing a container which includes the Python
-packages you need, e.g. this [PyTorch ROCm
-container](https://hub.docker.com/r/rocm/pytorch), you may [pull and use that
-container][pull-container].
+```bash
+python -m venv --system-site-packages venvs/venv-for-demo
+```
 
-### Use a container you build specifically tailored to your needs
+or
 
-If you are not able to find an existing container that suits your needs, you
-may [build your own][singularity-build]. If you are used to managing
-[Conda][conda]/[pip][pip] environments locally, you may use [cotainr] to build
-a container based on a [Conda environment][conda-env] file for use on LUMI.
+```bash
+virtualenv --system-site-packages venvs/venv-for-demo
+```
 
-## Installation methods recommended for specific use cases
+We recommend that, as in the example above, to use the `--system-site-packages` option. This ensures that already installed packages are used.
 
-For certain use cases, there may be better and/or easier alternatives to using
-a container:
+### Using a virtualenv
 
-- If you only need **very few** (less than 5, including dependencies) extra
-Python packages, you may [use the pre-installed
-cray-python](#use-the-cray-python-module) or [install a pip environment for use
-with a container](#use-an-existing-container-with-a-pip-virtual-environment).
-- If your workflow relies on a fixed environment in which you run a single
-binary/script and/or need intertwining with the host software environment, you
-may [wrap it using the LUMI container wrapper](#use-the-lumi-container-wrapper).
-- If you are used to the managed software stacks on the CSC HPC systems, you may
-prefer to [use pre-installed Python packages in the CSC software
-stack](#use-the-csc-software-stack).
+To use a virtualenv it is necessary to activate it:
 
-### Use the cray-python module
+```bash
+source venvs/venv-for-demo/bin/activate
+(venv-for-demo) [user@cluster:~]$
+```
 
-As part of the [LUMI software stack][lumi-software-stack], we provide the
-`cray-python` module which contains some basic Scientific Python packages like
-NumPy and SciPy (built against Cray LibSci), mpi4py (built against Cray MPICH),
-Pandas, and Dask. If what you need is such a basic Cray optimized Scientific
-Python environment and, possibly, a few extra packages, you may load the
-`cray-python` module and install the few extra packages on the file systems in
-a [pip virtual environment][pip-virt-env].
+Once activated the prompt changes and any Python related commands that follow will refer to the Python installation and packages contained/linked in the virtualenv.
 
-### Use an existing container with a pip virtual environment
+### Installing new packages
 
-If you have an existing container but need a few extra packages, you may
-install such packages on the file systems in [pip virtual
-environment][pip-virt-env] and use them with the container. [An example of this
-approach is given in the LUMI PyTorch guide][container-virt-env-example].
+To install packages in the virtualenv it needs to be activated, and while it is active any packages installed with pip will be actually installed inside the virtualenv itself:
 
-### Use the LUMI container wrapper
+```bash
+source venvs/venv-for-demo/bin/activate
+(venv-for-demo) [user@cluster:~]$ pip install biopython
+```
 
-We provide the [LUMI container wrapper][tykky] which may be used to solve
-the "many small files" performance problem by wrapping a
-[Conda][conda]/[pip][pip] installation. This is a convenient way to get access
-to a performant Python installation if you only run a single binary/script
-and/or need to intertwine with the host software environment without having to
-explicitly deal with containers. See [this GitHub
-issues](https://github.com/DeiC-HPC/cotainr/issues/37) for a more detailed
-discussion of when this approach may be preferred over using a container
-directly.
+### Stop using a virtualenv
 
-### Use the CSC software stack
+To stop using a virtualenv one needs to deactivate it:
 
-[CSC provides a small additional software stack][csc-software-stack] on LUMI, similar to the
-software stacks provided on the Finnish HPC systems, which contains some Python
-packages. Please note that this software stack is only supported by CSC, not
-the LUMI User Support Team (LUST).
+```bash
+(venv-for-demo) [user@cluster:~]$ deactivate
+[user@cluster:~]$
+```
+
+### Removing a virtualenv
+
+To permanently remove a virtualenv one simply deletes the directory which contains it.
+
+```bash
+rm -rf venvs/venv-for-demo/
+```
 
 ## Discouraged installation methods
 
-**We strongly discourage installing large collections of Python packages
-directly on the file systems on LUMI, i.e.**
-
-- **Don't install conda/pip environments directly on the file systems**.
-- **Don't install pip virtual environments directly on the file systems using
-  the OS python**.
-- **Don't install Python packages directly on the file systems using
-  Easybuild**.
-- **Don't install Python packages directly on the file systems using Spack**.
+We strongly discourage installing Python packages
+directly through the OS Python with `pip` without using virtual environments as
+described above.
